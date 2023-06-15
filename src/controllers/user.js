@@ -3,6 +3,7 @@ var db = require('../models')
 var moment = require('moment')
 
 const fetchAllUsers = async (req, res) => {
+
     try {
         let users = await db.User.findAll()
         return res.status(200).json({
@@ -34,9 +35,10 @@ const phoneNumberValidation = async (req, res, next) => {
 }
 
 const addUser = async (req, res) => {
-    let { name, date_of_birth, email, phone_number } = req.body
+    let { name,  email, phone_number,date_of_birth  } = req.body
     try {
         let user = await db.User.findOne({ where: { email: email } })
+        console.log(JSON.stringify(user))
         if (user) {
             return res.status(201).json({
                 status: "Failed",
@@ -46,11 +48,10 @@ const addUser = async (req, res) => {
         else {
             let result = await db.User.create({
                 name: name,
-                date_of_birth: new Date(Date.now()),
+                date_of_birth:date_of_birth,
                 email: email,
                 phone_number: phone_number
             })
-
             return res.status(200).json({
                 status: "Success",
                 payload: result,

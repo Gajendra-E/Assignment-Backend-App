@@ -24,15 +24,21 @@ const fetchAllUsers = async (req, res) => {
 
 const phoneNumberValidation = async (req, res, next) => {
     let { phone_number } = req.body
-    if (phone_number.length === 10) {
-        next()
+
+   const checkNumber = (number) => {
+        var isNumber = /^-{0,1}\d+$/.test(number)
+        return isNumber;
     }
-    else {
-        return res.json({
-            status: "Failed",
-            message: "Invalide Phone Number"
-        })
-    }
+    
+   if( checkNumber(phone_number) !== true || phone_number.length !== 10){
+    return res.json({
+        status: "Failed",
+        message: "Invalide Phone Number"
+    })
+   }
+   else{
+    next()
+   }
 }
 
 const addUser = async (req, res) => {

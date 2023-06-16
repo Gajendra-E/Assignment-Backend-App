@@ -1,6 +1,7 @@
 
 var db = require('../models')
 var moment = require('moment')
+var Email = require('../emailConfig/index');
 
 const fetchAllUsers = async (req, res) => {
 
@@ -52,6 +53,7 @@ const addUser = async (req, res) => {
                 email: email,
                 phone_number: phone_number
             })
+             Email.send_email(email,name);
             return res.status(200).json({
                 status: "Success",
                 payload: result,
@@ -60,10 +62,11 @@ const addUser = async (req, res) => {
         }
     }
     catch (error) {
+        console.log(JSON.stringify(error))
         return res.status(200).json({
             status: "Failed",
             error: error,
-            message: "user not successfully created"
+            message: "user failed create"
         })
     }
 }

@@ -2,6 +2,10 @@ DB Configuration
 =======================
 Replace your databse "username" and "password" inside config.json file (filepath:src/config/config.json)
 
+Email Configuration
+------------------
+Replace your  host,port,user,password,from sender address to send mails at filepath(emailConfig/index.js)
+
 To run the application
 ====================================
     1.   npm install
